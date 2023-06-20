@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const uuid = require('./helpers/uuid');
 
 const app = express();
 const PORT = 3001;
@@ -25,14 +26,22 @@ app.post('/api/notes', (req, res) => {
     let db = JSON.parse(fs.readFileSync('db/db.json'));
     res.json(db);
 
-    let note = {
+    const newNote = {
         title: req.body.title,
-        text: req.body.text
+        text: req.body.text,
+        id: uuid()
     };
 
-    db.push(note);
+    db.push(newNote);
     fs.writeFileSync('db/db.json', JSON.stringify(db));
     res.json(db);
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+    const del = db.filter((data) => data.id !== req.params.id)
+
+    fs.writeFileSync('./db/db.json', JSON.stringify(del))
+    readFile.json(del)
 });
 
 app.listen(PORT, () => {

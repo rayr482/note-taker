@@ -14,7 +14,7 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
@@ -42,6 +42,10 @@ app.delete('/api/notes/:id', (req, res) => {
 
     fs.writeFileSync('./db/db.json', JSON.stringify(del))
     readFile.json(del)
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/404.html'));
 });
 
 app.listen(PORT, () => {
